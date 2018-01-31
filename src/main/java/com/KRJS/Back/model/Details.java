@@ -118,11 +118,13 @@ public class Details {
 	}
 	
 
+	
+
 	@Override
 	public String toString() {
-		return "Details [memberid=" + memberid + ", member=" + member + ", qualification=" + qualification
-				+ ", occupation=" + occupation + ", maritalStatus=" + maritalStatus + ", noc=" + noc + ", vemanaVani="
-				+ vemanaVani + ", phone=" + phone + ", gmail=" + gmail + ", ward=" + ward + ", wardNo=" + wardNo + "]";
+		return "Details [memberid=" + memberid + ", qualification=" + qualification + ", occupation=" + occupation
+				+ ", maritalStatus=" + maritalStatus + ", noc=" + noc + ", vemanaVani=" + vemanaVani + ", phone="
+				+ phone + ", gmail=" + gmail + ", ward=" + ward + ", wardNo=" + wardNo + "]";
 	}
 
 	@Column(name = "qualification")

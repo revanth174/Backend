@@ -6,6 +6,12 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class Address {
 
+	@Override
+	public String toString() {
+		return "Address [address=" + address + ", taluk=" + taluk + ", district=" + district + ", city=" + city
+				+ ", state=" + state + ", pincode=" + pincode + "]";
+	}
+
 	@Column(name = "address")
 	String address;
 

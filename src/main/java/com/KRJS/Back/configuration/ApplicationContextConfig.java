@@ -14,13 +14,15 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.KRJS.Back.dao.MemberDao;
+import com.KRJS.Back.daoimpl.MemberDaoImpl;
 import com.KRJS.Back.model.Address;
 import com.KRJS.Back.model.Details;
 import com.KRJS.Back.model.Member;
 import com.KRJS.Back.model.Payment;
 
 @Configuration
-@ComponentScan("com.KRJS.Back")
+
 @EnableTransactionManagement
 public class ApplicationContextConfig {
 
@@ -78,6 +80,12 @@ public class ApplicationContextConfig {
 		System.out.println("hibernate properties created");
 		return prop;
 	}
+	
+	@Autowired
+	@Bean(name="dao")
+	public MemberDao getMem(SessionFactory sessionFactory) {
+		return new MemberDaoImpl(sessionFactory);
+	}
 
 	// session factory
 	// @Autowired
@@ -88,7 +96,7 @@ public class ApplicationContextConfig {
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 		sessionBuilder.addProperties(getHibernateProperties());
 		sessionBuilder.addAnnotatedClass(Member.class);
-		//sessionBuilder.scanPackages("com.KRJS.model.*");
+		sessionBuilder.scanPackages("com.KRJS.Back.model");
 		sessionBuilder.addAnnotatedClass(Details.class);
 		sessionBuilder.addAnnotatedClass(Payment.class);
 		sessionBuilder.addAnnotatedClass(Address.class);
@@ -97,6 +105,7 @@ public class ApplicationContextConfig {
 		return sessionBuilder.buildSessionFactory();
 	}
 
+	
 	@Autowired
 	@Bean
 	public HibernateTransactionManager getTransactionManager(SessionFactory sessionFactory) {

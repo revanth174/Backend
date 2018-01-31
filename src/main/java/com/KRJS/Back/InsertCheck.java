@@ -6,16 +6,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.KRJS.Back.dao.MemberDao;
-import com.KRJS.Back.daoimpl.MemberDaoImpl;
 import com.KRJS.Back.model.Address;
 import com.KRJS.Back.model.Details;
 import com.KRJS.Back.model.Member;
 import com.KRJS.Back.model.Payment;
 
 public class InsertCheck {
+	
+	
 
 	public static void main(String args[]) {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
@@ -55,6 +57,7 @@ public class InsertCheck {
 		details.setNoc(0);
 		details.setVemanaVani(true);
 		details.setMember(m);
+		details.setPhone(123456l);
 
 		details.setQualification("degree");
 
@@ -72,12 +75,18 @@ public class InsertCheck {
 		m.setPayment(payment);
 		// System.out.println("hello");
 		
-		MemberDao dao = (MemberDao) context.getBean("MemberDao");
-		if(dao.insert(m))
-			System.out.println("success");
-		else
-			System.out.println("not success");
+		System.out.println(m);
 		
+		MemberDao dao = (MemberDao) context.getBean("memberDAO");
+		dao.insert(m);
+		
+		/*List<Member> list = dao.SelectAll();
+		for(Member ms : list) {
+			System.out.print(ms.getMemberId());
+			System.out.println(ms.getPayment().getRefNo());
+		}*/
+		
+	
 		
 		/*List<Member> list = dao.getByState("Andhra Pradesh");
 		

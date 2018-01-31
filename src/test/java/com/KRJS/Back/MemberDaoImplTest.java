@@ -7,6 +7,7 @@ import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.JUnit4;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import com.KRJS.Back.dao.MemberDao;
@@ -18,15 +19,15 @@ import junit.framework.TestCase;
 public class MemberDaoImplTest extends TestCase {
 
 	static AnnotationConfigApplicationContext context;
-	static MemberDao dao;
+	public static MemberDao dao;
 
 	@BeforeClass
 	public static void init() {
 		context = new AnnotationConfigApplicationContext();
 		context.scan("com.KRJS.Back");
 		context.refresh();
-
-		dao = (MemberDao) context.getBean("MemberDao");
+		dao = (MemberDao) context.getBean("memberDAO");
+		
 	}
 
 	@Test
@@ -34,39 +35,41 @@ public class MemberDaoImplTest extends TestCase {
 
 	}
 
-	/*@Test
+	@Test
 	public void getMemberTest() {
-		Member m = (Member) dao.getById("M13735");
+		Member m = (Member) dao.getById("M90502");
 		System.out.println(m);
 		assertEquals("M1335", m.getMemberId());
 		// System.out.println(m);
-	}*/
+	}
 
 	@Test
 	public void deleteMemberTest() {
-		Member m = dao.getById("M13735");
-		//assertTrue(dao.delete(m));
+		if(dao == null)
+			System.out.println("null");
+		Member m =dao.getById("M99482");
+		assertTrue(dao.delete(m));
 	}
 
-	/*@Test
+	@Test
 	public void updateMemberTest() {
-		Member m = dao.getById("M72272");
+		Member m = dao.getById("M70446");
 		m.setName("revanth");
 		
 		assertTrue(dao.update(m));
 
-	}*/
+	}
 	
 	
-	/*@Test
+	@Test
 	public void selectAllTest() {
 		List<Member> list = dao.SelectAll();
 		for(Member m : list) {
 			System.out.print(m.getMemberId());
 			System.out.println(m.getPayment().getRefNo());
 		}
-		assertEquals(3,list.size());
-	}*/
+		
+	}
 
 	
 	
@@ -83,20 +86,20 @@ public class MemberDaoImplTest extends TestCase {
 	
 	@Test
 	public void getByPhoneNumber() {
-		List<Member> list = dao.getByMobileNumber(12334567l);
+		List<Member> list = dao.getByMobileNumber(123456l);
 		for(Member m :list)
 			System.out.println(m.getMemberId());
 	}
 	
-	/*@Test(expected = Exception.class)
+	@Test(expected = Exception.class)
 	public void getByPhoneNumber_ExceptionTest() {
 		List<Member> list = dao.getByMobileNumber(2525l);
 		
-	}*/
+	}
 	
 	@Test
 	public void getByDistrict() {
-		List<Member> list = dao.getByDistrict("Andhra Pradesh");
+		List<Member> list = dao.getByDistrict("delhi");
 		for(Member m : list)
 			System.out.println(m.getMemberId());
 		
@@ -113,7 +116,7 @@ public class MemberDaoImplTest extends TestCase {
 		
 	}
 
-	/*@Test(expected = NullPointerException.class)
+	@Test(expected = NullPointerException.class)
 	public void getByState_Exception() {
 		List<Member> list = dao.getByState("Andha Pradesh");
 		if(!list.isEmpty())
@@ -122,7 +125,7 @@ public class MemberDaoImplTest extends TestCase {
 		else
 			System.out.println("empty");
 		
-	}*/
+	}
 	
 	
 	@Test

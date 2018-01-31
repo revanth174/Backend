@@ -1,10 +1,9 @@
 package com.KRJS.Back.daoimpl;
 
+import java.sql.SQLException;
 import java.util.List;
 
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import javax.sql.DataSource;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -15,21 +14,42 @@ import org.springframework.transaction.annotation.Transactional;
 import com.KRJS.Back.dao.MemberDao;
 import com.KRJS.Back.model.Member;
 
-@Repository("MemberDao")
 @Transactional
+@Repository("memberDAO")
 public class MemberDaoImpl implements MemberDao {
 
 	@Autowired
 	SessionFactory sessionFactory;
 
-	MemberDaoImpl(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	@Autowired
+	DataSource dataSource;
+	public MemberDaoImpl(SessionFactory sessionFactory)
+	{
+		System.out.println(sessionFactory);
+		this.sessionFactory= sessionFactory;
+		System.out.println("obj created");
+	}
+	
+	static {
+		System.out.println("memberdaoImpl created");
 	}
 
 	public boolean insert(Member m) {
+	
+		
+		
+		try {
+			dataSource.getConnection();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		System.out.println("heelo welcome to member insert");
 		try {
+			
 			sessionFactory.getCurrentSession().persist(m);
+			
+			
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

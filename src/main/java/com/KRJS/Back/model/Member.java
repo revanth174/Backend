@@ -10,9 +10,10 @@ import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.stereotype.Component;
+import org.springframework.format.annotation.DateTimeFormat;
 
 
 
@@ -29,6 +30,7 @@ public class Member {
 	private String memberId;
 
 	
+	
 
 	@Column(name = "membershipType")
 	private String type;
@@ -44,6 +46,7 @@ public class Member {
 	@Column(name = "member_fname")
 	private String fname;
 
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	@Column(name = "member_dateofbirth")
 	private LocalDate dob;
 
